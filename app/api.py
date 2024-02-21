@@ -13,7 +13,13 @@ posts = [
     }
 ]
 
-users = []
+users = [
+    {
+        "fullname": "Rodrigo Heloani",
+        "email": "rodrigohbx@gmail.com",
+        "password": "12345"
+    }
+]
 
 app = FastAPI()
 
@@ -22,7 +28,7 @@ app = FastAPI()
 
 def check_user(data: UserLoginSchema):
     for user in users:
-        if user.email == data.email and user.password == data.password:
+        if user['email'] == data.email and user['password'] == data.password:
             return True
     return False
 
@@ -62,10 +68,10 @@ async def add_post(post: PostSchema) -> dict:
     }
 
 
-@app.post("/user/signup", tags=["user"])
-async def create_user(user: UserSchema = Body(...)):
-    users.append(user)  # replace with db call, making sure to hash the password first
-    return signJWT(user.email)
+# @app.post("/user/signup", tags=["user"])
+# async def create_user(user: UserSchema = Body(...)):
+#     users.append(user)  # replace with db call, making sure to hash the password first
+#     return signJWT(user.email)
 
 
 @app.post("/user/login", tags=["user"])
